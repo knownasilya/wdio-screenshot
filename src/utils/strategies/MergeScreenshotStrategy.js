@@ -24,7 +24,7 @@ export default class MergeScreenshotStrategy extends BaseStrategy {
   }
 
   getCropDimensions() {
-    const { viewportWidth, viewportHeight, pixelRatio, rotation } = this.screenDimensions;
+    const { viewportWidth, viewportHeight, pixelRatio } = this.screenDimensions;
     const { startX, startY, endX, endY } = this.area;
 
     const { x, y } = this.index;
@@ -35,7 +35,7 @@ export default class MergeScreenshotStrategy extends BaseStrategy {
     const wantedHeight = endY - startY - y * viewportHeight;
     const height = wantedHeight > viewportHeight ? viewportHeight : wantedHeight;
 
-    return super.getCropDimensions(width, height, 0, 0, pixelRatio, true, rotation);
+    return this.createCropDimensions(width, height, 0, 0, pixelRatio, true, 0);
   }
 
 
