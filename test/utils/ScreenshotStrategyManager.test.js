@@ -6,6 +6,7 @@ import ScreenshotStrategyManager from '../../src/utils/ScreenshotStrategyManager
 import BaseStrategy from '../../src/utils/strategies/BaseStrategy';
 import MergeScreenshotStrategy from '../../src/utils/strategies/MergeScreenshotStrategy';
 import FullpageScreenshotStrategy from '../../src/utils/strategies/FullpageScreenshotStrategy';
+import iOSScreenshotStrategy from '../../src/utils/strategies/iOSScreenshotStrategy';
 
 describe('ScreenshotStrategyManager', function() {
 
@@ -65,6 +66,16 @@ describe('ScreenshotStrategyManager', function() {
       },
     };
 
+    this.ipad = {
+      ...browser,
+      isMobile: true,
+      isIOS: true,
+      desiredCapabilities: {
+        browserName: 'safari',
+        deviceName: 'iPad'
+      },
+    };
+
     this.screenDimensions = {};
   })
 
@@ -98,6 +109,21 @@ describe('ScreenshotStrategyManager', function() {
       // then
       assert.instanceOf(strategy, BaseStrategy);
       assert.instanceOf(strategy, FullpageScreenshotStrategy);
+    }
+
+  });
+
+  it('returns a instance of iOSScreenshotStrategy for iOS devices', function () {
+    const browsers = [
+      this.ipad,
+    ];
+
+    for (const browser of browsers) {
+      // when
+      const strategy = ScreenshotStrategyManager.getStrategy(browser, this.screenDimensions);
+      // then
+      assert.instanceOf(strategy, BaseStrategy);
+      assert.instanceOf(strategy, iOSScreenshotStrategy);
     }
 
   });
